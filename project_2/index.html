@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tajawal:wght@200;300;400;500;700;800;900&family=Work+Sans:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, rgb(123, 14, 248), rgb(106, 91, 239));
+            font-family: 'Tajawal', sans-serif;
+            direction: rtl;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0px;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            width: 99.5%;
+        }
+
+        .first_div {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            width: 92%;
+            border-bottom: 1px rgb(157, 157, 244) solid;
+        }
+
+        #city {
+            font-weight: 600;
+            margin-left: 100px;
+            font-size: 60px;
+            color: #fff;
+        }
+
+        #date {
+            font-weight: 300;
+            color: #fff;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        .second_div {
+            flex-wrap: wrap;
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .square {
+            display: inline-block;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
+            height: 200px;
+            width: 180px;
+        }
+
+        .pray {
+            display: block;
+            height: 20%;
+            font-size: 23px;
+            color: #fff;
+            background: linear-gradient(45deg, rgb(111, 111, 246), rgb(84, 84, 243));
+        }
+
+        .time {
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            background: #fff;
+            font-size: 50px;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 100vh;">
+        <div class="main">
+            <div class="first_div">
+                <div id="city" class="city">
+                    <h1 id="city_name">طولكرم</h1>
+                </div>
+                <div id="date" class="date">
+                    <h3 id="inner_date">الجمعة-(13-11-2002)</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="second_div">
+            <div class="square">
+                <div class="pray ">
+                    <h4>الفجر</h4>
+                </div>
+                <div class="time">
+                    <h3 id="fajr">04:11</h3>
+                </div>
+            </div>
+            <div class="square">
+                <div class="pray">
+                    <h4>الشروق</h4>
+                </div>
+                <div class="time">
+                    <h3 id="shoroq">5:11</h3>
+                </div>
+            </div>
+            <div class="square">
+                <div class="pray">
+                    <h4>الظهر</h4>
+                </div>
+                <div class="time">
+                    <h3 id="dohr">10:12</h3>
+                </div>
+            </div>
+            <div class="square">
+                <div class="pray">
+                    <h4>العصر</h4>
+                </div>
+                <div class="time">
+                    <h3 id="asr">3:20</h3>
+                </div>
+            </div>
+            <div class="square">
+                <div class="pray">
+                    <h4>المغرب</h4>
+                </div>
+                <div class="time">
+                    <h3 id="magreb">6:11</h3>
+                </div>
+            </div>
+            <div class="square">
+                <div class="pray">
+                    <h4>العشاء</h4>
+                </div>
+                <div class="time">
+                    <h3 id="isha">8:11</h3>
+                </div>
+            </div>
+        </div>
+        <div class="center" style="margin-top: 90px;">
+            <select name="" id="cities-select" style="width: 300px; height: 35px;font-size: 25px; font-family: 'Tajawal', sans-serif; 
+        background: none; color: rgb(19, 19, 51); border-color:#fff ; border-radius: 20px;">
+
+            </select>
+        </div>
+    </div>
+</body>
+<script>
+    let cities = [
+        "طولكرم", "نابلس", "رام الله"
+    ]
+    for (let city of cities) {
+        const content = `
+        <option>${city}</option>
+        `
+        document.getElementById("cities-select").innerHTML += content;
+    }
+    document.getElementById("cities-select").addEventListener("change", function () {
+        if (this.value == "طولكرم") {
+            getTiming("PS-TKM", "طولكرم");
+        }
+        if (this.value == "نابلس") {
+            getTiming("PS-NBS", "نابلس");
+        }
+        if (this.value == "رام الله") {
+            getTiming("PS-RBH*", "رام الله");
+        }
+    })
+
+    function getTiming(city_name, city_name1) {
+        document.getElementById("city_name").innerHTML = city_name1;
+        let params = {
+            country: "PS",
+            city: city_name,
+        };
+        axios
+            .get("http://api.aladhan.com/v1/timingsByCity", {
+                params: params,
+            })
+            .then(function (response) {
+                console.log(response.data.data);
+                const timings = response.data.data.timings;
+                const date1 = response.data.data.date;
+                fillTimePrayer("fajr", timings.Fajr);
+                fillTimePrayer("shoroq", timings.Sunrise)
+                fillTimePrayer("dohr", timings.Dhuhr)
+                fillTimePrayer("asr", timings.Asr)
+                fillTimePrayer("magreb", timings.Maghrib)
+                fillTimePrayer("isha", timings.Isha)
+                document.getElementById("inner_date").innerHTML = date1.hijri.weekday.ar + " - " + date1.readable;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+    function fillTimePrayer(id, time) {
+        document.getElementById(id).innerHTML = time;
+    }
+    getTiming("PS-TKM", "طولكرم");
+
+
+
+</script>
+
+</html>
